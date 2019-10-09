@@ -24,8 +24,15 @@ class RegistrationCenter:
         MK = str(self.mk)
         service_key_01 = str(cs_secret_key[0])
         service_key_02 = str(cs_secret_key[1])
+        g = self.groupObj.serialize(self.pk['g'])
+        g2 = self.groupObj.serialize(self.pk['g2'])
+        h = self.groupObj.serialize(self.pk['h'])
+        f = self.groupObj.serialize(self.pk['f'])
+        e_gg_alpha = self.groupObj.serialize(self.pk['e_gg_alpha'])
+        PPK = {'g': g, 'g2': g2, 'h': h, 'f': f, 'e_gg_alpha': e_gg_alpha}
+        # PPK = RegistrationCenter.sezerlize(self, self.pk)
         c_01.execute('insert into main.base_information (service_id, service_key, pk, mk) '
-                     'values ("{}", "{}", "{}", "{}")'.format(1, service_key_01, PK, MK))
+                     'values ("{}", "{}", "{}", "{}")'.format(1, service_key_01, str(PPK), MK))
         c_02.execute('insert into main.base_information (service_id, service_key, pk, mk) '
                      'values ("{}", "{}", "{}", "{}")'.format(1, service_key_02, PK, MK))
 
@@ -81,3 +88,10 @@ class RegistrationCenter:
         # base information
         # service id, service_key , master_key, master_public_key
 
+    def sezerlize(self, aim_dict):
+        for index in aim_dict:
+            temple = aim_dict[index]
+            print(type(temple))
+            aim_dict[index] = self.groupObj.serialize(temple)
+        print(aim_dict)
+        return aim_dict

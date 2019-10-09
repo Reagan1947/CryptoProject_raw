@@ -1,5 +1,6 @@
 from charm.toolbox.pairinggroup import PairingGroup, ZR, G1, G2, GT, pair
-from abenc_bsw07 import *
+from ttt import *
+
 # type annotations
 pk_t = {'g': G1, 'g2': G2, 'h': G1, 'f': G1, 'e_gg_alpha': GT}
 mk_t = {'beta': ZR, 'g2_alpha': G2}
@@ -32,3 +33,14 @@ class CPabe_BSW07(ABEnc):
             A *= (pair(ct['Cy'][j], sk['Dj'][k]) / pair(sk['Djp'][k], ct['Cyp'][j])) ** z[j]
 
         return ct['C_tilde'] / (pair(ct['C'], sk['D']) / A)
+
+
+result = enc()
+groupObj = PairingGroup('SS512')
+cpabe = CPabe_BSW07(groupObj)
+cpabe.setup()
+pk = result[0]
+sk = result[1]
+ct = result[2]
+rec_msg = cpabe.decrypt(pk, sk, ct)
+print(rec_msg)

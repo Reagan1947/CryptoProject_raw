@@ -1,6 +1,6 @@
 import sqlite3
 import random
-from charm.toolbox.pairinggroup import GT
+from charm.toolbox.pairinggroup import PairingGroup, GT
 
 
 class CloudServiceProvider:
@@ -44,11 +44,33 @@ class CloudServiceProvider:
         get_access_policy = access_policy[service_index]
         cpabe = register.cpabe
 
-        # pk = c.execute('SELECT pk FROM main.base_information')
-        # for p in pk:
-        #     abe_pk = p[0]
+        pk = c.execute('SELECT pk FROM main.base_information')
+        for p in pk:
+            abe_pk = p[0]
 
-        ct = cpabe.encrypt(PK, rand_msg, get_access_policy)
+        dict = eval(abe_pk)
+        print(dict)
+        g = dict['g']
+        print(g)
+        g2 = dict['g2']
+        h = dict['h']
+        f = dict['f']
+        e_gg_alpha = dict['e_gg_alpha']
+        g = register.groupObj.deserialize(g)
+        g2 = register.groupObj.deserialize(g2)
+        h = register.groupObj.deserialize(h)
+        f = register.groupObj.deserialize(f)
+        e_gg_alpha = register.groupObj.deserialize(e_gg_alpha)
+        abe_pk = {'g': g, 'g2': g2, 'h': h, 'f': f, 'e_gg_alpha': e_gg_alpha}
+
+        # print('PK g type is {}'.format(type(PK['g'])))
+        # print(eval(abe_pk))
+        # pp = eval(abe_pk)
+        # print(type(pp.g))
+        # ppk = pickle.dumps(PK)
+        # pickle.load(ppk)
+        # print('ppk type is {}'.format(type(ppk)))
+        ct = cpabe.encrypt(abe_pk, rand_msg, get_access_policy)
         RDN_j = random.getrandbits(128)
         Z_2 = Q_ij ^ Tm ^ RDN_j ^ user_id
         SKY_s_j_U_i = hash(
