@@ -24,6 +24,7 @@ class MobileUserRegister:
         N_dot_01 = N_01 ^ self.m
         N_dot_02 = N_02 ^ self.m
         AID_01 = smart_car_result[0] ^ hash(str(N_dot_01) + str(self.user_id))
+        print('N_dot 01 real is {}'.format(N_dot_01))
         AID_02 = smart_car_result[0] ^ hash(str(N_dot_02) + str(self.user_id))
         NId_cs_01 = smart_car_result[1][0][2]
         NId_cs_02 = smart_car_result[1][1][2]

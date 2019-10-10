@@ -34,7 +34,7 @@ class RegistrationCenter:
         c_01.execute('insert into main.base_information (service_id, service_key, pk, mk) '
                      'values ("{}", "{}", "{}", "{}")'.format(1, service_key_01, str(PPK), MK))
         c_02.execute('insert into main.base_information (service_id, service_key, pk, mk) '
-                     'values ("{}", "{}", "{}", "{}")'.format(1, service_key_02, PK, MK))
+                     'values ("{}", "{}", "{}", "{}")'.format(2, service_key_02, PK, MK))
 
         conn_01.commit()
         conn_01.close()

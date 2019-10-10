@@ -31,7 +31,11 @@ class MobileUserLogin:
         NId_cs = NId_cs_dot ^ hash(str(rho_dot) + self.bi)
         AID_ij = smart_car[4][service_index - 1]
         N_dot = smart_car[3][service_index - 1]
+        print('N_dot 01 is {}'.format(N_dot))
         XId_U = AID_ij ^ hash(str(N_dot) + str(self.user_id))
+        print('XId_u is {}'.format(XId_U))
+        # AID_01 = smart_car_result[0] ^ hash(str(N_dot_01) + str(self.user_id))
+
         XId_U_star = XId_U ^ hash(str(Tm) + str(NId_cs))
         log_in_result = [Z_1, XId_U_star, Tm, H_1]
         return log_in_result

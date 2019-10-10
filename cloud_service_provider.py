@@ -16,17 +16,28 @@ class CloudServiceProvider:
         for row_1 in cursor:
             service_key = row_1[0]
         NId_cs = hash(str(service_index) + service_key)
+        # XId_U_star = XId_U ^ hash(str(Tm) + str(NId_cs))
+
         XId_U_star = log_in_result[1]
         Tm = log_in_result[2]
-        XId_U = XId_U_star ^ hash(str(NId_cs) + str(Tm))
+        XId_U = XId_U_star ^ hash(str(Tm) + str(NId_cs))
+
+        print('XId_U is tag {}'.format(XId_U))
         #################################### user id selet*???????????????
         record = c.execute('SELECT * FROM authentica_information')
         for row_2 in record:
             user_id = row_2[0]
             user_fake_id = row_2[1]
             pair_key = row_2[2]
+
+
+
+        """
+        here should add a select get the id and other by fake_id
+        """
         Q_ij = hash(str(hash(int(pair_key) ^ int(user_id))) + str(service_key))
         Z_1 = log_in_result[0]
+        print('user_fake_id is {}'.format(user_fake_id))
         # service_index 是否str
         X_1 = Z_1 ^ hash(service_index) ^ Tm ^ Q_ij
         H_2 = hash(str(Z_1) + str(user_id) + str(Tm) + str(X_1))
